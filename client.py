@@ -36,9 +36,10 @@ def receive_file():
 
 
 serverip = input('please input server ip: ')
+port = input('whick port')
 tp = input('send or receive: ')
 s = socket.socket()
-s.connect((serverip, 3155))
+s.connect((serverip, port))
 s.send(tp.encode('utf-8'))
 if tp in ('s', 'send'):
     send_file()

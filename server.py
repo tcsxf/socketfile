@@ -23,8 +23,7 @@ def send_file():
         print('file not exists')
         return
 
-    filename = os.path.basename(file)
-    sock.send(filename.encode('utf-8'))
+    sock.send(file.encode('utf-8'))
     with open(file, 'rb') as f:
         while 1:
             byte = f.read(1024)
@@ -35,9 +34,9 @@ def send_file():
     print('send file success')
 
 
-os.chdir(r'C:\Users\Administrator\Desktop')
 s = socket.socket()
-s.bind(('', 3155))
+port = input('socket on which port')
+s.bind(('', port))
 s.listen(1)
 print('server ip is {0}'.format(socket.gethostbyname(socket.gethostname())))
 
