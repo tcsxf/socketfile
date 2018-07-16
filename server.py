@@ -35,8 +35,8 @@ def send_file():
 
 
 s = socket.socket()
-port = input('socket on which port')
-s.bind(('', port))
+port = input('socket on which port: ')
+s.bind(('', int(port)))
 s.listen(1)
 print('server ip is {0}'.format(socket.gethostbyname(socket.gethostname())))
 
