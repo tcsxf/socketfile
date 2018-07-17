@@ -35,10 +35,14 @@ def send_file():
 
 
 s = socket.socket()
+s.connect(('8.8.8.8', 53))
+print('server ip is %s' % s.getsockname()[0])
+s.close()
+
+s = socket.socket()
 port = input('socket on which port: ')
 s.bind(('', int(port)))
 s.listen(1)
-print('server ip is {0}'.format(socket.gethostbyname(socket.gethostname())))
 
 while 1:
     sock, addr = s.accept()
