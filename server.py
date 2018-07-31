@@ -48,7 +48,7 @@ if s.connect_ex(('8.8.8.8', 53)):
         print('private network')
 else:
     ip = s.getsockname()[0]
-    print('server ip is %s' % s.getsockname()[0])
+print('server ip is %s' % s.getsockname()[0])
 s.close()
 
 s = socket.socket()
