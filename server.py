@@ -1,5 +1,6 @@
 import socket
 import os
+import re
 
 
 def receive_file():
@@ -35,8 +36,19 @@ def send_file():
 
 
 s = socket.socket()
-s.connect(('8.8.8.8', 53))
-print('server ip is %s' % s.getsockname()[0])
+s.settimeout(3)
+if s.connect_ex(('8.8.8.8', 53)):
+    addrs = socket.getaddrinfo(socket.gethostname(), None)
+    for addr in addrs:
+        ip = re.match(r'(\d+)\.\d+\.\d+\.\d+', addr[4][0])
+        if ip and ip.group(1) != '127':
+            ip = ip.group()
+            break
+    else:
+        print('private network')
+else:
+    ip = s.getsockname()[0]
+    print('server ip is %s' % s.getsockname()[0])
 s.close()
 
 s = socket.socket()
@@ -47,7 +59,6 @@ s.listen(1)
 while 1:
     sock, addr = s.accept()
     print('connected by {0}:{1}'.format(addr[0], addr[1]))
-
     tp = sock.recv(1024).decode('utf-8')
     if tp in ('s', 'send'):
         receive_file()
