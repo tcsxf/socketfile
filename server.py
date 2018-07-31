@@ -41,14 +41,14 @@ if s.connect_ex(('8.8.8.8', 53)):
     addrs = socket.getaddrinfo(socket.gethostname(), None)
     for addr in addrs:
         ip = re.match(r'(\d+)\.\d+\.\d+\.\d+', addr[4][0])
-        if ip and ip.group(1) != '127':
+        if ip and ip.group(1) not in ('127', '0'):
             ip = ip.group()
             break
     else:
         print('private network')
 else:
     ip = s.getsockname()[0]
-print('server ip is %s' % s.getsockname()[0])
+print('server ip is %s' % ip)
 s.close()
 
 s = socket.socket()
